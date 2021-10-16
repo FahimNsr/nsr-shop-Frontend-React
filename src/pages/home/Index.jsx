@@ -5,6 +5,7 @@ import HomeNavbar from "../../components/HomeNavbar";
 import HomePage from "./HomePage";
 import Register from "./Register";
 import Login from "./Login";
+import Logout from "./Logout";
 import Products from "./Products";
 import Cart from "./Cart";
 
@@ -12,14 +13,19 @@ const Home = () => {
     return (
         <>
             <HomeNavbar />
-            <Switch>
-                <Route path="/cart" component={Cart} />
-                <Route path="/products" component={Products} />
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-                <Route exact path="/" component={HomePage} />
-                <Redirect from="*" to="/" />
-            </Switch>
+            <div className="p4">
+                <div className=" container">
+                    <Switch>
+                        <Route path="/cart" component={Cart} />
+                        <Route path="/products" component={Products} />
+                        <Route path="/logout" component={Logout} />
+                        <Route path="/login" component={Login} />
+                        <Route path="/register" component={Register} />
+                        <Route exact path="/" component={HomePage} />
+                        <Redirect from="*" to="/" />
+                    </Switch>
+                </div>
+            </div>
         </>
     );
 };
