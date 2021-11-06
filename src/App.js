@@ -1,23 +1,43 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import jwt from "jsonwebtoken";
+import { logout } from "./actions/userActions";
+import { USER_LOGIN_SUCCESS } from "./constants/userConstants"
 
-import Home from "./pages/home";
-import Dashboard from "./pages/admin";
+import PublicRoutes from "./screens/publicScreens";
+import AdminRoutes from "./screens/adminScreens";
 
 function App() {
-    return (
-        <BrowserRouter>
-            <Switch>
-                <Route path="/dashboard">
-                    <Dashboard />
-                </Route>
-                <Route >
-                    <Home />
-                </Route>
-                <Redirect from="*" to="/" />
-            </Switch>
-        </BrowserRouter>
-    );
+  const dispatch = useDispatch();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const decodedToken = jwt.decode(token);
+      const dateNow = Date.now() / 1000;
+      if (decodedToken.exp < dateNow) {
+        dispatch(logout());
+      } else {
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: decodedToken });
+      }
+    }
+  }, [dispatch]);
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route
+          path="/dashboard"
+          render={() => (userInfo && userInfo.isAdmin ? <AdminRoutes /> : <Redirect to="/login" />)}
+        />
+        <Route render={() => <PublicRoutes />} />
+        <Redirect from="*" to="/404" />
+      </Switch>
+    </BrowserRouter>
+  );
 }
 
 export default App;

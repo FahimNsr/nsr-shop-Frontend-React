@@ -1,66 +1,67 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { decodeToken } from "../helpers";
-import { userAction } from "../redux/action";
+import { logout } from "../actions/userActions";
+import SearchBox from "../components/SearchBox";
+import logo from "./logo.jpg"
+const HomeNavbar = () => {
 
-const HomeNavbar = ({ history }) => {
-    let { pathname } = useLocation();
-    const dispatch = useDispatch;
-    const { status, userInfo } = useSelector((state) => state.authentication);
+  let { pathname } = useLocation();
+  const { userInfo } = useSelector((state) => state.userLogin);
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+  const dispatch = useDispatch();
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            const decodedToken = decodeToken(token);
-            const dateNow = Date.now() / 1000;
-            if (decodedToken.exp < dateNow) {
-                history.replace("/");
-                dispatch(userAction.logout());
-            }
-        }
-    }, [dispatch, history]);
-
-    return (
-        <nav className="navbar navbar-light bg-dark p-2 mb-3">
-            <Link className="navbar-brand text-light" to="/">
-                My Online Shop
+  return (
+    <nav className="navbar navbar-light bg-dark p-2 rounded-bottom mb-3">
+      <div className="col-auto">
+        <Link className="navbar-brand ms-4" to="/">
+          <img height="30" width="30"src={logo} alt="logo" />
+        </Link>
+        <Link className={pathname === "/" ? "btn link-secondary" : "btn link-light"} to="/">
+          Home
+        </Link>
+        <Link className={pathname === "/products" ? "btn link-secondary" : "btn link-light"} to="/products">
+          Products
+        </Link>
+      </div>
+      <div className="col-3 ">
+        <SearchBox />
+      </div>
+      <div className="col-auto d-flex justify-content-end">
+        <Link className={pathname === "/cart" ? "btn link-secondary" : "btn link-light"} to="/cart">
+          Cart {cartItems.length > 0 && <span className="badge rounded-pill bg-success">{cartItems.length}</span>}
+        </Link>
+        {userInfo ? (
+          <>
+            {userInfo.isAdmin ? (
+              <Link className={pathname === "/dashboard" ? "btn link-secondary" : "btn link-light"} to="/dashboard">
+                Dashboard
+              </Link>
+            ) : null}
+            <Link className={pathname === "/profile" ? "btn link-secondary" : "btn link-light"} to="/profile">
+              {userInfo.name ? userInfo.name + " | Profile" : "Profile"}
             </Link>
-            <Link className={pathname === "/" ? "btn link-secondary" : "btn link-light"} to="/">
-                Home
+            <Link className="me-4 btn link-light" to="#logout" onClick={logoutHandler}>
+              Logout
             </Link>
-            <Link className={pathname === "/products" ? "btn link-secondary" : "btn link-light"} to="/products">
-                Products
+          </>
+        ) : (
+          <>
+            <Link className={pathname === "/register" ? "btn link-secondary" : "btn link-light"} to="/register">
+              Register
             </Link>
-            <Link className={pathname === "/cart" ? "btn link-secondary" : "btn link-light"} to="/cart">
-                Cart
+            <Link className={"me-4 " + (pathname === "/login" ? "btn link-secondary" : "btn link-light ")} to="/login">
+              Login
             </Link>
-            {status ? (
-                <div className="d-flex justify-content-end ">
-                    {userInfo.admin ? (
-                        <Link className={pathname === "/dashboard" ? "btn link-secondary" : "btn link-light"} to="/dashboard">
-                            Dashboard
-                        </Link>
-                    ) : null}
-                    <Link className={pathname === "/profile" ? "btn link-secondary" : "btn link-light"} to="/profile">
-                        {userInfo.firstname} | Profile
-                    </Link>
-                    <Link className="btn link-light" to="/logout">
-                        Logout
-                    </Link>
-                </div>
-            ) : (
-                <div className="d-flex justify-content-end ">
-                    <Link className={pathname === "/register" ? "btn link-secondary" : "btn link-light"} to="/register">
-                        Register
-                    </Link>
-                    <Link className={pathname === "/login" ? "btn link-secondary" : "btn link-light"} to="/login">
-                        Login
-                    </Link>
-                </div>
-            )}
-        </nav>
-    );
+          </>
+        )}
+      </div>
+    </nav>
+  );
 };
 
 export default HomeNavbar;
