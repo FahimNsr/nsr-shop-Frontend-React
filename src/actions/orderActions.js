@@ -24,19 +24,14 @@ import {
 } from "../constants/orderConstants";
 const localApi = "http://localhost:8000";
 
-export const createOrder = (order) => async (dispatch, getState) => {
+export const createOrder = (order) => async (dispatch) => {
   dispatch({ type: ORDER_CREATE_REQUEST, payload: { order } });
-  console.log(order)
   try {
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    const token = localStorage.getItem("token");
     const { data } = await axios.post(`${localApi}/api/orders`, order, {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(data)
+    console.log(data);
     dispatch({ type: ORDER_CREATE_SUCCESS, payload: data.order });
     dispatch({ type: CART_EMPTY });
     localStorage.removeItem("cartItems");
@@ -48,14 +43,12 @@ export const createOrder = (order) => async (dispatch, getState) => {
   }
 };
 
-export const detailsOrder = (orderId) => async (dispatch, getState) => {
+export const detailsOrder = (orderId) => async (dispatch) => {
   dispatch({ type: ORDER_DETAILS_REQUEST, payload: orderId });
-  const {
-    userLogin: { userInfo },
-  } = getState();
+  const token = localStorage.getItem("token");
   try {
     const { data } = await axios.get(`${localApi}/api/orders/${orderId}`, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data });
   } catch (error) {
@@ -64,16 +57,12 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
   }
 };
 
-export const listOrderMine = () => async (dispatch, getState) => {
+export const listOrderMine = () => async (dispatch) => {
   dispatch({ type: ORDER_MINE_LIST_REQUEST });
-  const {
-    userLogin: { userInfo },
-  } = getState();
+  const token = localStorage.getItem("token");
   try {
     const { data } = await axios.get(`${localApi}/api/orders/myorders`, {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
     dispatch({ type: ORDER_MINE_LIST_SUCCESS, payload: data });
   } catch (error) {
@@ -84,14 +73,12 @@ export const listOrderMine = () => async (dispatch, getState) => {
 
 // export const listOrders =
 //   ({ seller = "" }) =>
-//   async (dispatch, getState) => {
+//   async (dispatch) => {
 //     dispatch({ type: ORDER_LIST_REQUEST });
-//     const {
-//       userLogin: { userInfo },
-//     } = getState();
+// const token = localStorage.getItem("token")
 //     try {
 //       const { data } = await axios.get(`${localApi}/api/orders?seller=${seller}`, {
-//         headers: { Authorization: `Bearer ${userInfo.token}` },
+//         headers: { Authorization: `Bearer ${token}` }
 //       });
 //       console.log(data);
 //       dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
@@ -101,14 +88,12 @@ export const listOrderMine = () => async (dispatch, getState) => {
 //     }
 //   };
 
-// export const deleteOrder = (orderId) => async (dispatch, getState) => {
+// export const deleteOrder = (orderId) => async (dispatch) => {
 //   dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
-//   const {
-//     userLogin: { userInfo },
-//   } = getState();
+// const token = localStorage.getItem("token")
 //   try {
 //     const { data } = axios.delete(`${localApi}/api/orders/${orderId}`, {
-//       headers: { Authorization: `Bearer ${userInfo.token}` },
+//       headers: { Authorization: `Bearer ${token}` },
 //     });
 //     dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
 //   } catch (error) {
@@ -117,17 +102,15 @@ export const listOrderMine = () => async (dispatch, getState) => {
 //   }
 // };
 
-// export const deliverOrder = (orderId) => async (dispatch, getState) => {
+// export const deliverOrder = (orderId) => async (dispatch) => {
 //   dispatch({ type: ORDER_DELIVER_REQUEST, payload: orderId });
-//   const {
-//     userLogin: { userInfo },
-//   } = getState();
+// const token = localStorage.getItem("token")
 //   try {
 //     const { data } = axios.put(
 //       `${localApi}/api/orders/${orderId}/deliver`,
 //       {},
 //       {
-//         headers: { Authorization: `Bearer ${userInfo.token}` },
+//         headers: { Authorization: `Bearer ${token}` },
 //       }
 //     );
 //     dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
@@ -137,14 +120,12 @@ export const listOrderMine = () => async (dispatch, getState) => {
 //   }
 // };
 
-// export const summaryOrder = () => async (dispatch, getState) => {
+// export const summaryOrder = () => async (dispatch) => {
 //   dispatch({ type: ORDER_SUMMARY_REQUEST });
-//   const {
-//     userLogin: { userInfo },
-//   } = getState();
+// const token = localStorage.getItem("token")
 //   try {
 //     const { data } = await axios.get(`${localApi}/api/orders/summary`, {
-//       headers: { Authorization: `Bearer ${userInfo.token}` },
+//       headers: { Authorization: `Bearer ${token}` },
 //     });
 //     dispatch({ type: ORDER_SUMMARY_SUCCESS, payload: data });
 //   } catch (error) {

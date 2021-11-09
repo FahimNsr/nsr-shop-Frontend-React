@@ -37,8 +37,8 @@ export const listProducts =
     }
   };
 
-  export const detailsProduct = (productId) => async (dispatch) => {
-    dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
+export const detailsProduct = (productId) => async (dispatch) => {
+  dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
   try {
     const { data } = await axios.get(`${localApi}/api/products/${productId}`);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
@@ -50,19 +50,17 @@ export const listProducts =
   }
 };
 
-export const createProduct = (newProduct, file) => async (dispatch, getState) => {
+export const createProduct = (newProduct, file) => async (dispatch) => {
   dispatch({ type: PRODUCT_CREATE_REQUEST });
-  const {
-    userLogin: { userInfo },
-  } = getState();
+  const token = localStorage.getItem("token");
   try {
     const { data } = await axios.post(`${localApi}/api/products/create`, newProduct, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
     await axios.post(`${localApi}/api/uploads`, file, {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     dispatch({
@@ -75,24 +73,22 @@ export const createProduct = (newProduct, file) => async (dispatch, getState) =>
   }
 };
 
-export const updateProduct = (id, product, file) => async (dispatch, getState) => {
+export const updateProduct = (id, product, file) => async (dispatch) => {
   dispatch({ type: PRODUCT_UPDATE_REQUEST, payload: product });
-  const {
-    userLogin: { userInfo },
-  } = getState();
+  const token = localStorage.getItem("token");
   try {
     const { data } = await axios.put(`${localApi}/api/products/${id}`, product, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+      headers: { Authorization: `Bearer ${token}` },
     });
     if (file.get("imageName")) {
       await axios.post(`${localApi}/api/uploads`, file, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
     }
-    
+
     dispatch({ type: PRODUCT_UPDATE_SUCCESS, payload: data });
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.message;
@@ -100,15 +96,12 @@ export const updateProduct = (id, product, file) => async (dispatch, getState) =
   }
 };
 
-export const deleteProduct = (productId) => async (dispatch, getState) => {
+export const deleteProduct = (productId) => async (dispatch) => {
   dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
-  const {
-    userLogin: { userInfo },
-  } = getState();
+  const token = localStorage.getItem("token")
   try {
-    // eslint-disable-next-line no-unused-vars
-    const { data } = axios.delete(`${localApi}/api/products/${productId}`, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
+    axios.delete(`${localApi}/api/products/${productId}`, {
+      headers: { Authorization: `Bearer ${token}` },
     });
     dispatch({ type: PRODUCT_DELETE_SUCCESS });
   } catch (error) {
