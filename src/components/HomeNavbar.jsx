@@ -3,9 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../actions/userActions";
 import SearchBox from "../components/SearchBox";
-import logo from "./logo.jpg"
-const HomeNavbar = () => {
 
+const HomeNavbar = () => {
   let { pathname } = useLocation();
   const { userInfo } = useSelector((state) => state.userLogin);
   const cart = useSelector((state) => state.cart);
@@ -19,7 +18,7 @@ const HomeNavbar = () => {
     <nav className="navbar navbar-light bg-dark p-2 rounded-bottom mb-3">
       <div className="col-auto">
         <Link className="navbar-brand ms-4" to="/">
-          <img height="30" width="30"src={logo} alt="logo" />
+          <img height="30" width="30"src="https://nsr-shop.herokuapp.com/logo.jpg" alt="logo" />
         </Link>
         <Link className={pathname === "/" ? "btn link-secondary" : "btn link-light"} to="/">
           Home
@@ -28,7 +27,7 @@ const HomeNavbar = () => {
           Products
         </Link>
       </div>
-      <div className="col-3 ">
+      <div className="col-auto ">
         <SearchBox />
       </div>
       <div className="col-auto d-flex justify-content-end">

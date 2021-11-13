@@ -29,19 +29,16 @@ const Cart = (props) => {
   };
 
   return (
-    <div className="row m-5">
+    <div className="row justify-content-center m-5">
       <Helmet>
         <title>Cart</title>
       </Helmet>
 
       {error && <MessageBox variant="danger">{error}</MessageBox>}
 
-      <div className="col-9">
-        <h2 className="h6 d-flex flex-wrap justify-content-between align-items-center rounded p-2 bg-dark">
+      <div className=" col-auto ">
+        <h2 className=" h6 d-flex flex-wrap justify-content-between align-items-center rounded p-3 bg-dark">
           <span className=" text-light mx-3">Cart Items</span>
-          <Link className=" btn text-light" to="/products">
-            Continue shopping
-          </Link>
         </h2>
         {cartItems.length === 0 ? (
           <MessageBox>
@@ -84,10 +81,10 @@ const Cart = (props) => {
           ))
         )}
       </div>
-      <div className="col-3 text-center">
-        <h3 className="h6 p-3 bg-dark rounded text-light ">
+      <div className="col-auto text-center">
+        <h2 className="h6 p-3 bg-dark rounded text-light ">
           Subtotal <br />
-        </h3>
+        </h2>
         {cartItems.length ? cartItems.reduce((a, c) => a + c.qty, 0) + " Item(s)" : "No Items "}
         <div className="h3 font-weight-semibold my-4 py-3">
           {cartItems.length ? "$" + cartItems.reduce((a, c) => a + c.price * c.qty, 0) : null}

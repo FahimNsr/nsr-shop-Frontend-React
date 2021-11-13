@@ -41,11 +41,10 @@ const Products = (props) => {
   };
   return (
     <div>
-            <Helmet>
+      <Helmet>
         <title>Products {name && name !== "all" ? "| " + name : ""}</title>
       </Helmet>
-
-      <div className="row d-flex justify-content-center align-items-center">
+      <div className="row justify-content-center align-items-center m-1">
         <div className="col-auto ">
           Sort by
           <select
@@ -60,8 +59,8 @@ const Products = (props) => {
             <option value="highest">Price: High to Low</option>
           </select>
         </div>
-        <div className="col-auto">
-          <div className="input-group m-3 ">
+        <div className="col-auto ">
+          <div className="input-group  my-4 ">
             <span className="input-group-text">$</span>
             <input
               name="min"
@@ -186,7 +185,7 @@ const Products = (props) => {
                 </div>
               </div>
             ))}
-            <div className=" row justify-content-center mt-5">
+            <div className=" row justify-content-center pb-2 mb-5">
               <div className=" col-auto">
                 {[...Array(pages).keys()].map((x) => (
                   <Link

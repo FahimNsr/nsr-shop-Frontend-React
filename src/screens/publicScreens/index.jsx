@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import HomeNavbar from "../../components/HomeNavbar";
+import Footer from "../../components/Footer";
 import Home from "./Home";
 import NotFound from "./NotFound";
 import Register from "./Register";
@@ -33,11 +34,7 @@ const PublicRoutes = () => {
           <Route path="/profile" render={() => (userInfo ? <Profile /> : <Redirect to="/login" />)} />
 
           <Route path="/cart/:id?" component={Cart} />
-          <Route
-            path="/products/name/:name"
-            component={Products}
-            exact
-          />
+          <Route path="/products/name/:name" component={Products} exact />
           <Route
             path="/products/category/:category/name/:name/min/:min/max/:max/order/:order/pageNumber/:pageNumber"
             component={Products}
@@ -52,6 +49,7 @@ const PublicRoutes = () => {
           <Redirect from="*" to="/404" />
         </Switch>
       </div>
+      <Footer />
     </>
   );
 };
