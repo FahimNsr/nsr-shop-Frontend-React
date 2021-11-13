@@ -166,11 +166,11 @@ const Products = (props) => {
             {products.map((product) => (
               <div key={`${product._id}`} className="col-xl-2 col-lg-2 col-md-5 col-sm-5 col-xs-4  mx-2 my-4">
                 <div className="card text-center">
-                  <Link to={`product/${product._id}`}>
+                  <Link to={`/product/${product._id}`}>
                     <img className="card-img" src={pathFile + product.imageName} alt={product.name} />
                   </Link>
                   <div className="card-body">
-                    <Link to={`product/${product._id}`} className="text-decoration-none">
+                    <Link to={`/product/${product._id}`} className="text-decoration-none">
                       <h4 className="h5 card-title text-muted">{product.name}</h4>
                     </Link>
                     <h5 className="text-success mt-2">${product.price}</h5>
