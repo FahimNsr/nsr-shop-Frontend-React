@@ -48,10 +48,10 @@ const Cart = (props) => {
           cartItems.map((item) => (
             <div key={`${item.product}`}>
               <div className="d-flex align-items-center justify-content-between text-center ">
-                <Link to="#">
+                <Link to={`/product/${item.product}`}>
                   <img width="120" height="150" src={pathFile + item.imageName} alt={`${item.name}`} />
                 </Link>
-                <Link className="btn" to="#">
+                <Link className="btn" to={`/product/${item.product}`}>
                   {item.name}
                 </Link>
                 <div className="font-size-lg text-secondary">${item.price}</div>

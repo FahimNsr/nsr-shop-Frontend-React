@@ -8,6 +8,7 @@ import Home from "./Home";
 import NotFound from "./NotFound";
 import Register from "./Register";
 import Login from "./Login";
+import ProductDetails from "./ProductDetails";
 import Products from "./Products";
 import Cart from "./Cart";
 import Profile from "./Profile";
@@ -41,6 +42,7 @@ const PublicRoutes = () => {
             exact
           />
           <Route path="/products" component={Products} exact />
+          <Route path="/product/:id" component={ProductDetails} exact />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
           <Route path="/" component={Home} exact />

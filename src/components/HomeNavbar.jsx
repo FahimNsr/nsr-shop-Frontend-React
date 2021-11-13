@@ -18,7 +18,7 @@ const HomeNavbar = () => {
     <nav className="navbar navbar-light bg-dark p-2 rounded-bottom mb-3">
       <div className="col-auto">
         <Link className="navbar-brand ms-4" to="/">
-          <img height="30" width="30"src="https://nsr-shop.herokuapp.com/logo.jpg" alt="logo" />
+          <img height="30" width="30"src="http://localhost:8000/logo.jpg" alt="logo" />
         </Link>
         <Link className={pathname === "/" ? "btn link-secondary" : "btn link-light"} to="/">
           Home
