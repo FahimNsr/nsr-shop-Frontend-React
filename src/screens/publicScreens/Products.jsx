@@ -43,7 +43,7 @@ const Products = (props) => {
     return `/products/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}/pageNumber/${filterPage}`;
   };
   return (
-    <div>
+    <div className='mt-5'>
       <Helmet>
         <title>Products {name && name !== "all" ? "| " + name : ""}</title>
       </Helmet>

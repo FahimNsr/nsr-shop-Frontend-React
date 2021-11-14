@@ -23,7 +23,7 @@ const SearchBox = (props) => {
           placeholder="..........."
           onChange={(e) => setName(e.target.value)}
         />
-        <button className="btn btn-outline-light" type="submit">
+        <button className="btn btn-sm btn-outline-light" type="submit">
           Search
         </button>
       </div>

@@ -98,7 +98,7 @@ const ProductDetails = (props) => {
               </h6>
             </div>
             <div className="row justify-content-between mt-5">
-              <h6 className="text-light bg-dark p-2 rounded">Description</h6>
+              <h6 className="text-light bg-dark bg-gradient p-2 rounded">Description</h6>
               <h6 className="h5 text-secondary opacity-75">{description}</h6>
             </div>
           </div>

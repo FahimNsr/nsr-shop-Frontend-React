@@ -25,7 +25,7 @@ const PublicRoutes = () => {
   return (
     <>
       <HomeNavbar />
-      <div className="p4">
+      <div className="mt-5 py-5">
         <Switch>
           <Route path="/confirm" render={() => (userInfo ? <Confirm /> : <Redirect to="/login" />)} />
           <Route path="/payment" render={() => (userInfo ? <Payment /> : <Redirect to="/login" />)} />

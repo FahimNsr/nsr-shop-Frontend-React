@@ -15,22 +15,19 @@ const HomeNavbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-light bg-dark p-2 rounded-bottom mb-3">
+    <div className=" navbar bg-dark py-2 rounded-bottom fixed-top">
       <div className="col-auto">
-        <Link className="navbar-brand ms-4" to="/">
-          <img height="30" width="30"src="http://localhost:8000/logo.jpg" alt="logo" />
-        </Link>
-        <Link className={pathname === "/" ? "btn link-secondary" : "btn link-light"} to="/">
-          Home
+        <Link className="navbar-brand text-light m-2 opacity-75" to="/">
+          NSR
         </Link>
         <Link className={pathname === "/products" ? "btn link-secondary" : "btn link-light"} to="/products">
           Products
         </Link>
       </div>
-      <div className="col-auto ">
+      <div className="col col-lg-3 col-xl-3 col-md-4 mx-1">
         <SearchBox />
       </div>
-      <div className="col-auto d-flex justify-content-end">
+      <div className="col-auto mx-1 d-flex justify-content-end">
         <Link className={pathname === "/cart" ? "btn link-secondary" : "btn link-light"} to="/cart">
           Cart {cartItems.length > 0 && <span className="badge rounded-pill bg-success">{cartItems.length}</span>}
         </Link>
@@ -59,7 +56,7 @@ const HomeNavbar = () => {
           </>
         )}
       </div>
-    </nav>
+    </div>
   );
 };
 
