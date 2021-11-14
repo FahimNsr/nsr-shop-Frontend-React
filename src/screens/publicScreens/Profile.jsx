@@ -59,23 +59,22 @@ export default function Profile(props) {
           My Orders
         </Link>
       </div>
-      <div className="row d-flex justify-content-center align-items-center ">
-        <div className="col-8 col-auto">
+      <div className="row justify-content-center align-items-center mx-1 mb-5 ">
+        <div className="col-xl-6 col-lg-8 col-auto mx-5">
           <div className="card text-black">
             <div className="card-body ">
-              <div className="justify-content-center">
-                <h2 className="text-center fw-bold m-4 ">Update Your Profile</h2>
+              <div className="row justify-content-center">
                 {loading ? (
                   <LoadingBox></LoadingBox>
                 ) : error ? (
                   <MessageBox variant="danger">{error}</MessageBox>
                 ) : (
                   <>
-
+                    <h2 className="text-center fw-bold m-4 ">Update Your Profile</h2>
                     {loadingUpdate && <LoadingBox></LoadingBox>}
                     {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
                     <Helmet>
-                      <title>Profile | {user.name ? user.name : user.email }</title>
+                      <title>Profile | {user.name ? user.name : user.email}</title>
                     </Helmet>
                     <form onSubmit={submitHandler}>
                       <div className="d-flex flex-row align-items-center mb-4">

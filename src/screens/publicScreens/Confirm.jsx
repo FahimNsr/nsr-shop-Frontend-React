@@ -56,13 +56,12 @@ const Confirm = (props) => {
 
   return (
     <div>
-            <Helmet>
+      <Helmet>
         <title>Confirm | Checkout</title>
       </Helmet>
-
       <CheckoutSteps step1 step2 step3 step4></CheckoutSteps>
-      <div className="row mx-3">
-        <div className="col-8">
+      <div className="row justify-content-center mx-3">
+        <div className="col">
           <h2 className="h6 rounded p-2 my-1 bg-dark">
             <span className=" text-light mx-3">Shipping Address</span>
           </h2>
@@ -100,8 +99,7 @@ const Confirm = (props) => {
             ))}
           </div>
         </div>
-
-        <div className="col-4">
+        <div className="col-auto">
           <h2 className="h6 rounded p-2 my-1 bg-dark">
             <span className=" text-light mx-3">Order Summary</span>
           </h2>
@@ -119,7 +117,7 @@ const Confirm = (props) => {
               <div>${cart.taxPrice.toFixed(2)}</div>
             </div>
             <div className="d-flex justify-content-between my-2">
-              <div>
+              <div className="me-4">
                 <strong> Order Total</strong>
               </div>
               <div>

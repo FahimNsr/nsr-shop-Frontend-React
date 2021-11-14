@@ -44,8 +44,8 @@ export default function OrderDetails() {
             <span className="h6 text-light ms-3">Order Number : {id}</span>
             <span className="h6 text-light me-3">Order Date : {order.createdAt.substring(0, 10)}</span>
           </div>
-          <div className="row m-4">
-            <div className="col-8">
+          <div className="row justify-content-center m-4">
+            <div className="col">
               <h2 className="h6 rounded p-2 my-1 bg-dark">
                 <span className=" text-light mx-3">Order Item(s)</span>
               </h2>
@@ -55,10 +55,10 @@ export default function OrderDetails() {
                     key={`${item.product}`}
                     className="d-flex align-items-center justify-content-between text-center "
                   >
-                    <Link to="#">
+                  <Link to={`/product/${item.product}`}>
                       <img width="60" height="80" src={localApi + item.imageName} alt={`${item.name}`} />
                     </Link>
-                    <Link className="btn" to="#">
+                    <Link className="btn" to={`/product/${item.product}`}>
                       {item.name}
                     </Link>
                     <div className="font-size-lg text-secondary">
@@ -80,7 +80,7 @@ export default function OrderDetails() {
                 </p>
               </div>
             </div>
-            <div className="col-4  ">
+            <div className="col-auto ">
               <h2 className="h6 rounded p-2 my-1 bg-dark">
                 <span className=" text-light mx-3">Total</span>
               </h2>

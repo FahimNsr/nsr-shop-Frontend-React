@@ -62,15 +62,15 @@ const ProductDetails = (props) => {
             <img height="300" width="250" src={imageName ? pathFile + imageName : ""} alt={name} />
             <div className="text-center">
               {existInCart.length ? (
-                <Link to="/cart" className="btn btn-sm btn-outline-success px-4">
+                <Link to="/cart" className="btn btn-sm btn-outline-success px-4 mt-2">
                   Already in Cart
                 </Link>
               ) : countInStock ? (
-                <h6 className="btn btn-sm btn-success px-4" onClick={() => addToCartHandler(product._id)}>
+                <h6 className="btn btn-sm btn-success px-4 mt-2" onClick={() => addToCartHandler(product._id)}>
                   Add to Cart
                 </h6>
               ) : (
-                <h6 className="btn btn-sm btn-disable px-4">soldout</h6>
+                <h6 className="btn btn-sm btn-disable px-4 mt-2">soldout</h6>
               )}
             </div>
           </div>

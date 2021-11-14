@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useLocation , withRouter } from "react-router-dom";
+import { Link, useLocation, withRouter } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,8 @@ const MyOrders = (props) => {
     dispatch(listOrderMine());
   }, [dispatch]);
   return (
-    <div>
-                  <Helmet>
+    <div className="mx-3">
+      <Helmet>
         <title>My Orders</title>
       </Helmet>
 
@@ -30,7 +30,9 @@ const MyOrders = (props) => {
           Personal Details
         </Link>
         <Link
-          className={"col p-2 m-3 btn text-light " + (pathname.substring(0, 9) === "/myorders" ? " bg-dark" : " bg-secondary")}
+          className={
+            "col p-2 m-3 btn text-light " + (pathname.substring(0, 9) === "/myorders" ? " bg-dark" : " bg-secondary")
+          }
           to="/myorders"
         >
           My Orders
@@ -41,7 +43,7 @@ const MyOrders = (props) => {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : orders.length ? (
-        <table className="container table table-success table-striped table-hover mt-3 text-center">
+        <table className="table table-success table-striped table-hover mt-3 text-center">
           <thead>
             <tr>
               <th className="h6">ID</th>
@@ -87,5 +89,5 @@ const MyOrders = (props) => {
       )}
     </div>
   );
-}
-export default withRouter(MyOrders)
+};
+export default withRouter(MyOrders);

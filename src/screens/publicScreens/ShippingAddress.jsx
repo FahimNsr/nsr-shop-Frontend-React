@@ -6,7 +6,6 @@ import { saveShippingAddress } from "../../actions/cartActions";
 import CheckoutSteps from "../../components/CheckoutSteps";
 
 const ShippingAddress = (props) => {
-
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
@@ -27,9 +26,9 @@ const ShippingAddress = (props) => {
     <>
       <CheckoutSteps step1 step2></CheckoutSteps>
       <div className="row d-flex justify-content-center align-items-center ">
-      <Helmet>
-        <title>Shipping Address | Checkout </title>
-      </Helmet>
+        <Helmet>
+          <title>Shipping Address | Checkout </title>
+        </Helmet>
 
         <div className="col-8 col-auto">
           <div className="card text-black">
@@ -37,7 +36,7 @@ const ShippingAddress = (props) => {
               <div className="justify-content-center">
                 <h2 className="text-center fw-bold m-4 ">Shipping Address</h2>
                 <form onSubmit={submitHandler}>
-                  <div className="d-flex flex-row align-items-center mb-4">
+                  <div className="row align-items-center mb-2">
                     <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <label className="form-label">Full Name</label>
@@ -54,7 +53,7 @@ const ShippingAddress = (props) => {
                       />
                     </div>
                   </div>
-                  <div className="d-flex flex-row align-items-center mb-4">
+                  <div className="row align-items-center mb-2">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div className="form-outline flex-fill mb-0">
                       <label className="form-label">Address</label>
@@ -70,9 +69,9 @@ const ShippingAddress = (props) => {
                       />
                     </div>
                   </div>
-                  <div className="d-flex flex-row align-items-center mb-4">
+                  <div className="row align-items-center mb-2">
                     <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div className="form-outline flex-fill mb-0">
+                    <div className="col-auto form-outline flex-fill mb-0">
                       <label className="form-label">Postal Code</label>
                       <input
                         className="form-control"
@@ -85,8 +84,10 @@ const ShippingAddress = (props) => {
                         }}
                       />
                     </div>
+                  </div>
+                  <div className="row align-items-center mb-2">
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                    <div className="form-outline flex-fill mb-0">
+                    <div className="col-auto form-outline flex-fill mb-0">
                       <label className="form-label">City</label>
                       <input
                         className="form-control"
@@ -99,8 +100,10 @@ const ShippingAddress = (props) => {
                         }}
                       />
                     </div>
+                  </div>
+                  <div className="row align-items-center mb-2">
                     <i className="fas fa-key fa-lg me-3 fa-fw"></i>
-                    <div className="form-outline flex-fill mb-0">
+                    <div className="col-auto form-outline flex-fill mb-1">
                       <label className="form-label">Country</label>
                       <input
                         className="form-control"
@@ -114,7 +117,7 @@ const ShippingAddress = (props) => {
                       />
                     </div>
                   </div>
-                  <button type="submit" className="form-control btn btn-success opacity-75 m-2">
+                  <button type="submit" className="form-control btn btn-success opacity-75">
                     Continue
                   </button>
                 </form>
