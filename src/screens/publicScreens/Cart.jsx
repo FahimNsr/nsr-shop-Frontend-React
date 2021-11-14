@@ -36,7 +36,7 @@ const Cart = (props) => {
 
       {error && <MessageBox variant="danger">{error}</MessageBox>}
 
-      <div className=" col-auto ">
+      <div className="col">
         <h2 className=" h6 d-flex flex-wrap justify-content-between align-items-center rounded p-3 bg-dark">
           <span className=" text-light mx-3">Cart Items</span>
         </h2>
@@ -81,7 +81,7 @@ const Cart = (props) => {
           ))
         )}
       </div>
-      <div className="col-auto text-center">
+      <div className="col-auto col-xl-4 col-lg-4 col-md-4 text-center">
         <h2 className="h6 p-3 bg-dark rounded text-light ">
           Subtotal <br />
         </h2>
