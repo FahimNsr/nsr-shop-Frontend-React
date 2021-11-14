@@ -16,18 +16,18 @@ const HomeNavbar = () => {
 
   return (
     <div className=" navbar bg-dark py-2 rounded-bottom fixed-top">
-      <div className="col-auto">
-        <Link className="navbar-brand text-light m-2 opacity-75" to="/">
+      <div className="col-auto ms-3">
+        <Link className="navbar-brand text-light opacity-75" to="/">
           NSR
         </Link>
         <Link className={pathname === "/products" ? "btn link-secondary" : "btn link-light"} to="/products">
           Products
         </Link>
       </div>
-      <div className="col col-lg-3 col-xl-3 col-md-4 mx-1">
+      <div className="col col-lg-3 col-xl-3 col-md-4 col-sm-5 mx-1">
         <SearchBox />
       </div>
-      <div className="col-auto mx-1 d-flex justify-content-end">
+      <div className="col-auto mx-1 d-flex justify-content-between">
         <Link className={pathname === "/cart" ? "btn link-secondary" : "btn link-light"} to="/cart">
           Cart {cartItems.length > 0 && <span className="badge rounded-pill bg-success">{cartItems.length}</span>}
         </Link>
@@ -39,9 +39,9 @@ const HomeNavbar = () => {
               </Link>
             ) : null}
             <Link className={pathname === "/profile" ? "btn link-secondary" : "btn link-light"} to="/profile">
-              {userInfo.name ? userInfo.name + " | Profile" : "Profile"}
+              {userInfo.name ? userInfo.name + "|Profile" : "Profile"}
             </Link>
-            <Link className="me-4 btn link-light" to="#logout" onClick={logoutHandler}>
+            <Link className="me-2 btn link-light" to="#logout" onClick={logoutHandler}>
               Logout
             </Link>
           </>
@@ -50,7 +50,7 @@ const HomeNavbar = () => {
             <Link className={pathname === "/register" ? "btn link-secondary" : "btn link-light"} to="/register">
               Register
             </Link>
-            <Link className={"me-4 " + (pathname === "/login" ? "btn link-secondary" : "btn link-light ")} to="/login">
+            <Link className={"me-2 " + (pathname === "/login" ? "btn link-secondary" : "btn link-light ")} to="/login">
               Login
             </Link>
           </>
