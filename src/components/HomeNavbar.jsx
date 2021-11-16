@@ -5,7 +5,7 @@ import { logout } from "../actions/userActions";
 import SearchBox from "../components/SearchBox";
 
 const HomeNavbar = () => {
-  let { pathname } = useLocation();
+  const { pathname } = useLocation();
   const { userInfo } = useSelector((state) => state.userLogin);
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;

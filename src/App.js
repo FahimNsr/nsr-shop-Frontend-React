@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import jwt from "jsonwebtoken";
 import { logout } from "./actions/userActions";
-import { USER_LOGIN_SUCCESS } from "./constants/userConstants"
 
 import PublicRoutes from "./screens/publicScreens";
 import AdminRoutes from "./screens/adminScreens";
@@ -21,8 +20,6 @@ function App() {
       const dateNow = Date.now() / 1000;
       if (decodedToken.exp < dateNow) {
         dispatch(logout());
-      } else {
-        dispatch({ type: USER_LOGIN_SUCCESS, payload: decodedToken });
       }
     }
   }, [dispatch]);
