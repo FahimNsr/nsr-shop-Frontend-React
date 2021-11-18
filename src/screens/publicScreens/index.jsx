@@ -27,12 +27,21 @@ const PublicRoutes = () => {
       <HomeNavbar />
       <div className="mt-5 py-5">
         <Switch>
-          <Route path="/confirm" render={() => (userInfo ? <Confirm /> : <Redirect to="/login" />)} />
-          <Route path="/payment" render={() => (userInfo ? <Payment /> : <Redirect to="/login" />)} />
-          <Route path="/shipping" render={() => (userInfo ? <ShippingAddress /> : <Redirect to="/login" />)} />
-          <Route path="/myorders/:id" render={() => (userInfo ? <OrderDetails /> : <Redirect to="/login" />)} />
-          <Route path="/myorders" render={() => (userInfo ? <MyOrders /> : <Redirect to="/login" />)} />
-          <Route path="/profile" render={() => (userInfo ? <Profile /> : <Redirect to="/login" />)} />
+          <Route path="/confirm" render={() => (userInfo ? <Confirm /> : <Redirect to="/login?redirect=confirm" />)} />
+          <Route path="/payment" render={() => (userInfo ? <Payment /> : <Redirect to="/login?redirect=payment" />)} />
+          <Route
+            path="/shipping"
+            render={() => (userInfo ? <ShippingAddress /> : <Redirect to="/login?redirect=shipping" />)}
+          />
+          <Route
+            path="/myorders/:id"
+            render={() => (userInfo ? <OrderDetails /> : <Redirect to="/login?redirect=myorders/:id" />)}
+          />
+          <Route
+            path="/myorders"
+            render={() => (userInfo ? <MyOrders /> : <Redirect to="/login?redirect=myorders" />)}
+          />
+          <Route path="/profile" render={() => (userInfo ? <Profile /> : <Redirect to="/login?redirect=profile" />)} />
 
           <Route path="/cart/:id?" component={Cart} />
           <Route path="/products/name/:name" component={Products} exact />

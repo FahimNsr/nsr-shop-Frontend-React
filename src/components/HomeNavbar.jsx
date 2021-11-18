@@ -5,6 +5,7 @@ import { logout } from "../actions/userActions";
 import SearchBox from "../components/SearchBox";
 
 const HomeNavbar = () => {
+  const redirect = window.location.search ? window.location.search.split("=")[1] : "/";
   const { pathname } = useLocation();
   const { userInfo } = useSelector((state) => state.userLogin);
   const cart = useSelector((state) => state.cart);
@@ -47,10 +48,16 @@ const HomeNavbar = () => {
           </>
         ) : (
           <>
-            <Link className={pathname === "/register" ? "btn link-secondary" : "btn link-light"} to="/register">
+            <Link
+              className={pathname === "/register" ? "btn link-secondary" : "btn link-light"}
+              to={`/register?redirect=${redirect}`}
+            >
               Register
             </Link>
-            <Link className={"me-2 " + (pathname === "/login" ? "btn link-secondary" : "btn link-light ")} to="/login">
+            <Link
+              className={"me-2 " + (pathname === "/login" ? "btn link-secondary" : "btn link-light ")}
+              to={`/login?redirect=${redirect}`}
+            >
               Login
             </Link>
           </>
