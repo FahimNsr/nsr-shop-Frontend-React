@@ -59,7 +59,7 @@ export const logout = () => (dispatch) => {
   localStorage.removeItem("cartItems");
   localStorage.removeItem("shippingAddress");
   dispatch({ type: USER_LOGOUT });
-  // document.location.href = "/login";
+  document.location.href = "/";
 };
 
 export const detailsUser = (userId) => async (dispatch) => {
