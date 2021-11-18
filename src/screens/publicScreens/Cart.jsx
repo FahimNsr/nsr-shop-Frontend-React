@@ -2,22 +2,16 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
-import { addToCart, removeFromCart } from "../../actions/cartActions";
+import { addToCart, removeFromCart, updateCart } from "../../actions/cartActions";
+import { CART_RESET_MESSAGE } from "../../constants/cartConstants";
 import MessageBox from "../../components/MessageBox";
 const pathFile = "http://localhost:8000/";
 
 const Cart = (props) => {
-  const productId = props.match.params.id;
-
   const cart = useSelector((state) => state.cart);
-  const { cartItems, error } = cart;
+  const { cartItems, error, messages } = cart;
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, 1));
-    }
-  }, [dispatch, productId]);
 
   const removeFromCartHandler = (id) => {
     // delete action
@@ -26,7 +20,11 @@ const Cart = (props) => {
 
   const checkoutHandler = () => {
     props.history.push("/shipping");
+    dispatch({ type: CART_RESET_MESSAGE });
   };
+  useEffect(() => {
+    dispatch(updateCart());
+  }, [cartItems, dispatch]);
 
   return (
     <div className="row justify-content-center m-5">
@@ -40,6 +38,12 @@ const Cart = (props) => {
         <h2 className=" h6 d-flex flex-wrap justify-content-between align-items-center rounded p-3 bg-dark">
           <span className=" text-light mx-3">Cart Items</span>
         </h2>
+        {messages &&
+          messages.map((message, i) => (
+            <MessageBox key={i} variant="warning">
+              {message}
+            </MessageBox>
+          ))}
         {cartItems.length === 0 ? (
           <MessageBox>
             Your Cart is empty. <Link to="/products">Go Shopping</Link>

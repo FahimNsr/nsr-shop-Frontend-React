@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import { PayPalButton } from "react-paypal-button-v2";
+import { updateCart } from "../../actions/cartActions";
 import { createOrder } from "../../actions/orderActions";
 import { ORDER_CREATE_RESET } from "../../constants/orderConstants";
 import CheckoutSteps from "../../components/CheckoutSteps";
@@ -13,6 +14,9 @@ const localApi = "http://localhost:8000/";
 
 const Confirm = (props) => {
   const cart = useSelector((state) => state.cart);
+  if (cart.messages.length) {
+    props.history.push("/cart");
+  }
   if (!cart.shippingAddress.address) {
     props.history.push("/shipping");
   }
@@ -31,6 +35,7 @@ const Confirm = (props) => {
   const [sdkReady, setSdkReady] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(updateCart())
     const addPayPalScript = async () => {
       const { data } = await axios.get(`${localApi}api/config/paypal`);
       const script = document.createElement("script");

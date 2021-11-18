@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { detailsProduct } from "../../actions/productActions";
+import { addToCart } from "../../actions/cartActions";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 
@@ -43,8 +44,9 @@ const ProductDetails = (props) => {
     }
   }, [dispatch, product, productId]);
 
-  const addToCartHandler = (productId) => {
-    props.history.push(`/cart/${productId}?qty=1`);
+  const addToCartHandler = () => {
+    dispatch(addToCart(productId, 1));
+    props.history.push("/cart")
   };
 
   return (
@@ -66,7 +68,7 @@ const ProductDetails = (props) => {
                   Already in Cart
                 </Link>
               ) : countInStock ? (
-                <h6 className="btn btn-sm btn-success px-4 mt-2" onClick={() => addToCartHandler(product._id)}>
+                <h6 className="btn btn-sm btn-success px-4 mt-2" onClick={() => addToCartHandler()}>
                   Add to Cart
                 </h6>
               ) : (

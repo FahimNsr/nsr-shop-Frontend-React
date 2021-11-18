@@ -10,6 +10,7 @@ const HomeNavbar = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const cartBadge = cartItems ? cartItems.map((item) => item.qty).reduce((prev, curr) => prev + curr, 0) : 0;
   const dispatch = useDispatch();
   const logoutHandler = () => {
     dispatch(logout());
@@ -30,7 +31,7 @@ const HomeNavbar = () => {
       </div>
       <div className="col-auto mx-1 d-flex justify-content-between">
         <Link className={pathname === "/cart" ? "btn link-secondary" : "btn link-light"} to="/cart">
-          Cart {cartItems.length > 0 && <span className="badge rounded-pill bg-success">{cartItems.length}</span>}
+          Cart {cartBadge > 0 && <span className="badge rounded-pill bg-success">{cartBadge}</span>}
         </Link>
         {userInfo ? (
           <>

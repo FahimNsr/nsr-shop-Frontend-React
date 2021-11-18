@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../../actions/productActions";
+import { addToCart } from "../../actions/cartActions";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 const pathFile = "http://localhost:8000/";
@@ -30,8 +31,9 @@ const Products = (props) => {
     );
   }, [category, dispatch, max, min, name, order, pageNumber]);
 
-  const addToCartHandler = (productId) => {
-    props.history.push(`/cart/${productId}?qty=1`);
+  const addToCartHandler = (id) => {
+    dispatch(addToCart(id, 1));
+    props.history.push("/cart")
   };
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || pageNumber;
@@ -43,7 +45,7 @@ const Products = (props) => {
     return `/products/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}/pageNumber/${filterPage}`;
   };
   return (
-    <div className='mt-5'>
+    <div className="mt-5">
       <Helmet>
         <title>Products {name && name !== "all" ? "| " + name : ""}</title>
       </Helmet>

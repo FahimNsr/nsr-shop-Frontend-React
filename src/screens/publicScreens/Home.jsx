@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../../actions/productActions";
+import { addToCart } from "../../actions/cartActions";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 const pathFile = "http://localhost:8000/";
@@ -18,9 +19,9 @@ const Home = (props) => {
   useEffect(() => {
     dispatch(listProducts({}));
   }, [dispatch]);
-
-  const addToCartHandler = (productId) => {
-    props.history.push(`/cart/${productId}?qty=1`);
+  const addToCartHandler = (id) => {
+    dispatch(addToCart(id, 1));
+    props.history.push("/cart");
   };
 
   return (
@@ -46,24 +47,21 @@ const Home = (props) => {
                     <Link to={`/product/${product._id}`} className="text-decoration-none">
                       <h4 className="h5 card-title text-muted">{product.name}</h4>
                     </Link>
-                      <h5 className="text-success mt-2">${product.price}</h5>
-                      {cartItems.filter((items) => {
-                        return items.product === product._id;
-                      }).length ? (
-                        <Link to="/cart" className="btn fst-italic btn-sm btn-outline-success px-4">
-                          Already in Cart
-                        </Link>
-                      ) : product.countInStock ? (
-                        <h6
-                          className="btn btn-sm btn-outline-primary px-4"
-                          onClick={() => addToCartHandler(product._id)}
-                        >
-                          Add to Cart
-                        </h6>
-                      ) : (
-                        <h6 className="btn btn-sm btn-disable px-4">soldout</h6>
-                      )}
-                    </div>
+                    <h5 className="text-success mt-2">${product.price}</h5>
+                    {cartItems.filter((items) => {
+                      return items.product === product._id;
+                    }).length ? (
+                      <Link to="/cart" className="btn fst-italic btn-sm btn-outline-success px-4">
+                        Already in Cart
+                      </Link>
+                    ) : product.countInStock ? (
+                      <h6 className="btn btn-sm btn-outline-primary px-4" onClick={() => addToCartHandler(product._id)}>
+                        Add to Cart
+                      </h6>
+                    ) : (
+                      <h6 className="btn btn-sm btn-disable px-4">soldout</h6>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
