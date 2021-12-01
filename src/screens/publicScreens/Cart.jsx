@@ -20,12 +20,10 @@ const Cart = (props) => {
 
   const checkoutHandler = () => {
     props.history.push("/shipping");
+    dispatch({ type: CART_RESET_MESSAGE });
   };
   useEffect(() => {
     dispatch(updateCart());
-    return () => {
-      dispatch({ type: CART_RESET_MESSAGE });
-    };
   }, [cartItems, dispatch]);
 
   return (

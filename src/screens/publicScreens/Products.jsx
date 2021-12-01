@@ -33,15 +33,33 @@ const Products = (props) => {
 
   const addToCartHandler = (id) => {
     dispatch(addToCart(id, 1));
-    props.history.push("/cart")
+    props.history.push("/cart");
   };
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || pageNumber;
     const filterCategory = filter.category || category;
     const filterName = filter.name || name;
     const sortOrder = filter.order || order;
-    const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
-    const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
+    const filterMin = filter.min
+      ? filter.min
+      : filter.min === 0
+      ? 0
+      : Math.min.apply(
+          Math,
+          all.map(function (a) {
+            return a.price;
+          })
+        );
+    const filterMax = filter.max
+      ? filter.max
+      : filter.max === 0
+      ? 0
+      : Math.max.apply(
+          Math,
+          all.map(function (a) {
+            return a.price;
+          })
+        );
     return `/products/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}/pageNumber/${filterPage}`;
   };
   return (

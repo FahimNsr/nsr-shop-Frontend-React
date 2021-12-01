@@ -52,7 +52,7 @@ export const updateCart = () => async (dispatch, getState) => {
       seller: data.seller,
     };
     if (qty > data.countInStock) {
-      messages.push(`Only ${data.countInStock} ${data.name} are available in stock.`);
+      messages.push(`There is only ${data.countInStock} ${data.name} available for You.`);
       item.qty = data.countInStock;
     } else {
       item.qty = qty;
