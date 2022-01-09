@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
-import { listProducts } from "../../actions/productActions";
+import { listProducts, listCategories } from "../../actions/productActions";
 import { addToCart } from "../../actions/cartActions";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
@@ -15,10 +15,14 @@ const Products = (props) => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, all, products, page, pages, count } = productList;
 
+  const categoryList = useSelector((state) => state.categoryList);
+  const { categories } = categoryList;
+
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   useEffect(() => {
+    dispatch(listCategories());
     dispatch(
       listProducts({
         pageNumber,
@@ -35,38 +39,59 @@ const Products = (props) => {
     dispatch(addToCart(id, 1));
     props.history.push("/cart");
   };
+
+  const minPrice = all
+    ? Math.min.apply(
+        Math,
+        all.map((a) => {
+          return a.price;
+        })
+      )
+    : 0;
+  const maxPrice = all
+    ? Math.max.apply(
+        Math,
+        all.map((a) => {
+          return a.price;
+        })
+      )
+    : 0;
+
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || pageNumber;
     const filterCategory = filter.category || category;
     const filterName = filter.name || name;
     const sortOrder = filter.order || order;
-    const filterMin = filter.min
-      ? filter.min
-      : filter.min === 0
-      ? 0
-      : Math.min.apply(
-          Math,
-          all.map(function (a) {
-            return a.price;
-          })
-        );
-    const filterMax = filter.max
-      ? filter.max
-      : filter.max === 0
-      ? 0
-      : Math.max.apply(
-          Math,
-          all.map(function (a) {
-            return a.price;
-          })
-        );
+    const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
+    const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
     return `/products/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/order/${sortOrder}/pageNumber/${filterPage}`;
   };
   return (
-    <div className="mt-5">
+    <div className="mt-2">
       <Helmet>
         <title>Products {name && name !== "all" ? "| " + name : ""}</title>
       </Helmet>
+      {categories ? (
+        <div className="container">
+          <div className="h5 d-flex justify-content-between mx-5">
+            <Link
+              className={`text-decoration-none ${category === "all" ? " text-black" : " text-muted"} `}
+              to={getFilterUrl({ category: "all" })}
+            >
+              all
+            </Link>
+            {categories.map((cate) => (
+              <Link
+                key={cate}
+                className={`text-decoration-none ${cate === category ? " text-black" : " text-muted"} `}
+                to={getFilterUrl({ category: cate })}
+              >
+                {cate}
+              </Link>
+            ))}
+          </div>
+        </div>
+      ) : null}
       <div className="row justify-content-center align-items-center m-1">
         <div className="col-auto ">
           Sort by
@@ -87,42 +112,11 @@ const Products = (props) => {
             <span className="input-group-text">$</span>
             <input
               name="min"
+              min={minPrice}
+              max={maxPrice}
               type="number"
               className="form-control"
-              placeholder={
-                min && min !== 0
-                  ? min
-                  : all
-                  ? Math.min.apply(
-                      Math,
-                      all.map(function (a) {
-                        return a.price;
-                      })
-                    )
-                  : ""
-              }
-              min={
-                all
-                  ? Math.min.apply(
-                      Math,
-                      all.map(function (a) {
-                        return a.price;
-                      })
-                    )
-                  : 0
-              }
-              max={
-                max && Number(max) !== 0
-                  ? max
-                  : all
-                  ? Math.max.apply(
-                      Math,
-                      all.map(function (a) {
-                        return a.price;
-                      })
-                    )
-                  : ""
-              }
+              placeholder={Number(min) === 0 ? minPrice : min}
               onBlur={(e) => {
                 props.history.push(getFilterUrl({ min: e.target.value }));
               }}
@@ -131,42 +125,11 @@ const Products = (props) => {
             <span className="input-group-text">$</span>
             <input
               name="max"
+              min={minPrice}
+              max={maxPrice}
               type="number"
               className="form-control"
-              placeholder={
-                max && max !== 0
-                  ? max
-                  : all
-                  ? Math.max.apply(
-                      Math,
-                      all.map(function (a) {
-                        return a.price;
-                      })
-                    )
-                  : ""
-              }
-              min={
-                min && Number(min) !== 0
-                  ? min
-                  : all
-                  ? Math.min.apply(
-                      Math,
-                      all.map(function (a) {
-                        return a.price;
-                      })
-                    )
-                  : 0
-              }
-              max={
-                all
-                  ? Math.max.apply(
-                      Math,
-                      all.map(function (a) {
-                        return a.price;
-                      })
-                    )
-                  : ""
-              }
+              placeholder={Number(max) === 0 ? maxPrice : max}
               onBlur={(e) => {
                 props.history.push(getFilterUrl({ max: e.target.value }));
               }}

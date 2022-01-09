@@ -15,9 +15,9 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_DELETE_FAIL,
-  // PRODUCT_CATEGORY_LIST_REQUEST,
-  // PRODUCT_CATEGORY_LIST_SUCCESS,
-  // PRODUCT_CATEGORY_LIST_FAIL,
+  PRODUCT_CATEGORY_LIST_REQUEST,
+  PRODUCT_CATEGORY_LIST_SUCCESS,
+  PRODUCT_CATEGORY_LIST_FAIL,
 } from "../constants/productConstants";
 const localApi = "http://localhost:8000";
 
@@ -98,7 +98,7 @@ export const updateProduct = (id, product, file) => async (dispatch) => {
 
 export const deleteProduct = (productId) => async (dispatch) => {
   dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   try {
     axios.delete(`${localApi}/api/products/${productId}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -110,14 +110,12 @@ export const deleteProduct = (productId) => async (dispatch) => {
   }
 };
 
-// export const listProductCategories = () => async (dispatch) => {
-//   dispatch({
-//     type: PRODUCT_CATEGORY_LIST_REQUEST,
-//   });
-//   try {
-//     const { data } = await axios.get(`${localApi}/api/products/categories`);
-//     dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
-//   } catch (error) {
-//     dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
-//   }
-// };
+export const listCategories = () => async (dispatch) => {
+  dispatch({ type: PRODUCT_CATEGORY_LIST_REQUEST });
+  try {
+    const { data } = await axios.get(`${localApi}/api/products/categories`);
+    dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
+  }
+};
