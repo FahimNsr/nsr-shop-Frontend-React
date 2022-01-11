@@ -4,11 +4,14 @@ import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
+
 import { register } from "../../actions/userActions";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
 
 const Register = (props) => {
+  const { t } = useTranslation();
   const initialValues = {
     email: "",
     password: "",
@@ -16,12 +19,14 @@ const Register = (props) => {
     acceptTerms: false,
   };
   const registerValidationSchema = Yup.object().shape({
-    email: Yup.string().email("Email is invalid").required("Email is required"),
-    password: Yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+    email: Yup.string().email(t("validator.Email-is-invalid")).required(t("validator.Email-is-required")),
+    password: Yup.string()
+      .min(8, t("validator.Password-must-be-at-least-8-characters"))
+      .required(t("validator.Password-is-required")),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm Password is required"),
-    acceptTerms: Yup.bool().oneOf([true], "Accept Terms & Conditions is required"),
+      .oneOf([Yup.ref("password"), null], t("validator.Passwords-don't-match"))
+      .required(t("validator.Confirm-Password-is-required")),
+    acceptTerms: Yup.bool().oneOf([true], t("validator.Accept-Terms&Conditions-is-required")),
   });
 
   const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
@@ -45,9 +50,9 @@ const Register = (props) => {
     <Formik initialValues={initialValues} validationSchema={registerValidationSchema} onSubmit={onSubmit}>
       {({ errors, touched }) => (
         <Form>
-                      <Helmet>
-        <title>Register</title>
-      </Helmet>
+          <Helmet>
+            <title>Register</title>
+          </Helmet>
 
           <div className="container">
             <div className="row d-flex justify-content-center align-items-center ">
@@ -56,14 +61,14 @@ const Register = (props) => {
                   <div className="card-body p-md-5">
                     <div className="row justify-content-center">
                       <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                        <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Register</p>
+                        <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">{t("register.register")}</p>
                         {loading && <LoadingBox></LoadingBox>}
                         {error && <MessageBox variant="danger">{error}</MessageBox>}
                         <div className="mx-1 mx-md-4">
                           <div className="d-flex flex-row align-items-center mb-4">
                             <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                             <div className="form-outline flex-fill mb-0">
-                              <label className="form-label">Your Email</label>
+                              <label className="form-label">{t("register.your-email")}</label>
                               <Field
                                 name="email"
                                 type="text"
@@ -76,7 +81,7 @@ const Register = (props) => {
                           <div className="d-flex flex-row align-items-center mb-4">
                             <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
                             <div className="form-outline flex-fill mb-0">
-                              <label className="form-label">Password</label>
+                              <label className="form-label">{t("register.password")}</label>
                               <Field
                                 name="password"
                                 type="password"
@@ -89,7 +94,7 @@ const Register = (props) => {
                           <div className="d-flex flex-row align-items-center mb-4">
                             <i className="fas fa-key fa-lg me-3 fa-fw"></i>
                             <div className="form-outline flex-fill mb-0">
-                              <label className="form-label">Repeat your password</label>
+                              <label className="form-label">{t("register.repeat-your-password")}</label>
                               <Field
                                 name="confirmPassword"
                                 type="password"
@@ -111,14 +116,14 @@ const Register = (props) => {
                                 "form-check-input" + (errors.acceptTerms && touched.acceptTerms ? " is-invalid" : "")
                               }
                             />
-                            <label htmlFor="acceptTerms" className="form-check-label">
-                              Accept <Link to="#"> Terms & Conditions</Link>
+                            <label htmlFor="acceptTerms" className="h6 form-check-label">
+                              {t("register.accept")} <Link to="#"> {t("register.terms&conditions")}</Link>
                             </label>
                             <ErrorMessage name="acceptTerms" component="div" className="invalid-feedback" />
                           </div>
                           <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                             <button type="submit" className="btn btn-primary btn-lg">
-                              Register
+                              {t("register.register")}
                             </button>
                           </div>
                         </div>

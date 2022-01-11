@@ -2,13 +2,17 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 import { listProducts } from "../../actions/productActions";
 import { addToCart } from "../../actions/cartActions";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
+
 const pathFile = "http://localhost:8000/";
 
 const Home = (props) => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -29,8 +33,8 @@ const Home = (props) => {
       <Helmet>
         <title>NSR | Home</title>
       </Helmet>
-      <h3>Newest Arrivals</h3>
-      <div className="row d-flex justify-content-center align-items-center mx-1 my-3">
+      <h3>{t("products.newest-arrivals")}</h3>
+      <div className="row d-flex justify-content-center mx-1 my-3">
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -52,11 +56,11 @@ const Home = (props) => {
                       return items.product === product._id;
                     }).length ? (
                       <Link to="/cart" className="btn fst-italic btn-sm btn-outline-success px-4">
-                        Already in Cart
+                        {t("products.already-in-cart")}
                       </Link>
                     ) : product.countInStock ? (
                       <h6 className="btn btn-sm btn-outline-primary px-4" onClick={() => addToCartHandler(product._id)}>
-                        Add to Cart
+                        {t("products.add-to-cart")}
                       </h6>
                     ) : (
                       <h6 className="btn btn-sm btn-disable px-4">soldout</h6>

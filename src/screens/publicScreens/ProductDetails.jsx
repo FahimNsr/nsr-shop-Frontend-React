@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 import { detailsProduct } from "../../actions/productActions";
 import { addToCart } from "../../actions/cartActions";
 import LoadingBox from "../../components/LoadingBox";
@@ -10,6 +12,7 @@ import MessageBox from "../../components/MessageBox";
 const pathFile = "http://localhost:8000/";
 
 const ProductDetails = (props) => {
+  const { t } = useTranslation();
   const productId = props.match.params.id;
 
   const [name, setName] = useState();
@@ -46,7 +49,7 @@ const ProductDetails = (props) => {
 
   const addToCartHandler = () => {
     dispatch(addToCart(productId, 1));
-    props.history.push("/cart")
+    props.history.push("/cart");
   };
 
   return (
@@ -65,11 +68,11 @@ const ProductDetails = (props) => {
             <div className="text-center">
               {existInCart.length ? (
                 <Link to="/cart" className="btn btn-sm btn-outline-success px-4 mt-2">
-                  Already in Cart
+                  {t("products.already-in-cart")}
                 </Link>
               ) : countInStock ? (
                 <h6 className="btn btn-sm btn-success px-4 mt-2" onClick={() => addToCartHandler()}>
-                  Add to Cart
+                  {t("products.add-to-cart")}
                 </h6>
               ) : (
                 <h6 className="btn btn-sm btn-disable px-4 mt-2">soldout</h6>
@@ -84,13 +87,13 @@ const ProductDetails = (props) => {
             </div>
             <div className="row justify-content-between mt-3">
               <h6>
-                <span className="text-muted text-sm opacity-50 me-1">category </span>
+                <span className="text-muted text-sm opacity-50 me-1">{t("products.category")}</span>
                 <span className="h5 text-secondary opacity-75">{category}</span>
               </h6>
             </div>
             <div className="row justify-content-between mt-3">
               <h6>
-                <span className="text-muted opacity-50 me-1">brand </span>
+                <span className="text-muted opacity-50 me-1">{t("products.brand")}</span>
                 <span className="h5 text-secondary opacity-75">{brand}</span>
               </h6>
             </div>
@@ -100,7 +103,7 @@ const ProductDetails = (props) => {
               </h6>
             </div>
             <div className="row justify-content-between mt-5">
-              <h6 className="text-light bg-dark bg-gradient p-2 rounded">Description</h6>
+              <h6 className="text-light bg-dark bg-gradient p-2 rounded">{t("products.description")}</h6>
               <h6 className="h5 text-secondary opacity-75">{description}</h6>
             </div>
           </div>

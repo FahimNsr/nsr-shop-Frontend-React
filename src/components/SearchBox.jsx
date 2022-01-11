@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const SearchBox = (props) => {
+  const { t } = useTranslation();
   const [name, setName] = useState();
-  // console.log(name)
   if (name) {
     console.log("object");
   }
@@ -24,7 +25,7 @@ const SearchBox = (props) => {
           onChange={(e) => setName(e.target.value)}
         />
         <button className="btn btn-sm btn-outline-light" type="submit">
-          Search
+          {t("nav.search")}
         </button>
       </div>
     </form>

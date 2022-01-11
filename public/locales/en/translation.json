@@ -1,0 +1,60 @@
+{
+  "nav": {
+    "products": "Products",
+    "search": "Search",
+    "cart": "Cart",
+    "profile": "Profile",
+    "register": "Register",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "footer": "All right reserved.",
+  "products": {
+    "add-to-cart": "Add to Cart",
+    "already-in-cart": "Add to Cart",
+    "newest-arrivals": "Newest Arrivals",
+    "newest": "Newest Arrivals",
+    "Price-Low-to-High": "Price: Low to High",
+    "Price-High-to-Low": "Price: High to Low",
+    "result": "Result",
+    "results": "Results",
+    "category": "Category",
+    "brand": "Brand",
+    "description": "Description"
+  },
+  "cart": {
+    "cart-items": "Cart Items",
+    "your-cart-is-empty": "Your Cart is empty",
+    "go-shopping": "Go Shopping",
+    "delete": "Delete",
+    "subtotal": "Subtotal",
+    "item(s)": "Item(s)",
+    "no-items": "No Items",
+    "proceed-to-checkout": "Proceed to Checkout"
+  },
+  "register": {
+    "register": "Register",
+    "your-email": "Your Email",
+    "password": "Password",
+    "repeat-your-password": "Repeat your Password",
+    "accept": "Subtotal",
+    "terms&conditions": "Terms & Conditions"
+  },
+  "login": {
+    "login": "Login",
+    "your-email": "Your Email",
+    "password": "Password",
+    "don't-have-any-accounts": "don't have any accounts",
+    "register-now": "register now"
+  },
+  "validator": {
+    "Email-is-invalid": "Email is invalid",
+    "Email-is-required": "Your Email",
+    "Password-must-be-at-least-8-characters": "Password must be at least 8 characters",
+    "Password-is-required": "Password is required",
+    "Passwords-don't-match": "Passwords don't match",
+    "Confirm-Password-is-required": "Confirm Password is required",
+    "Accept-Terms&Conditions-is-required": "Accept Terms & Conditions is required"
+  },
+  "not-found": "not found"
+}

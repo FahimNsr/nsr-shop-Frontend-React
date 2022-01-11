@@ -2,13 +2,18 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 import { listProducts, listCategories } from "../../actions/productActions";
 import { addToCart } from "../../actions/cartActions";
 import LoadingBox from "../../components/LoadingBox";
 import MessageBox from "../../components/MessageBox";
+
 const pathFile = "http://localhost:8000/";
 
 const Products = (props) => {
+  const { t } = useTranslation();
+
   const { name = "all", category = "all", min = 0, max = 0, order = "newest", pageNumber = 1 } = useParams();
 
   const dispatch = useDispatch();
@@ -94,17 +99,16 @@ const Products = (props) => {
       ) : null}
       <div className="row justify-content-center align-items-center m-1">
         <div className="col-auto ">
-          Sort by
           <select
-            className="ms-2"
+            className="form-select"
             value={order}
             onChange={(e) => {
               props.history.push(getFilterUrl({ order: e.target.value }));
             }}
           >
-            <option value="newest">Newest Arrivals</option>
-            <option value="lowest">Price: Low to High</option>
-            <option value="highest">Price: High to Low</option>
+            <option value="newest">{t("products.newest")}</option>
+            <option value="lowest">{t("products.Price-Low-to-High")}</option>
+            <option value="highest">{t("products.Price-High-to-Low")}</option>
           </select>
         </div>
         <div className="col-auto ">
@@ -138,7 +142,11 @@ const Products = (props) => {
           </div>
         </div>
         <div className=" text-center">
-          {!count ? "No Results" : count === 1 ? `${count} Result` : `${count} Results`}
+          {!count
+            ? "No Results"
+            : count === 1
+            ? `${count} ${t("products.result")}`
+            : `${count} ${t("products.results")}`}
         </div>
         {loading ? (
           <LoadingBox></LoadingBox>
@@ -161,11 +169,11 @@ const Products = (props) => {
                       return items.product === product._id;
                     }).length ? (
                       <Link to="/cart" className="btn fst-italic btn-sm btn-outline-success px-4">
-                        Already in Cart
+                        {t("products.already-in-cart")}
                       </Link>
                     ) : product.countInStock ? (
                       <h6 className="btn btn-sm btn-outline-primary px-4" onClick={() => addToCartHandler(product._id)}>
-                        Add to Cart
+                        {t("products.add-to-cart")}
                       </h6>
                     ) : (
                       <h6 className="btn btn-sm btn-disable px-4">soldout</h6>

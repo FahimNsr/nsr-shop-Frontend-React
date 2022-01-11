@@ -2,12 +2,16 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
 import { addToCart, removeFromCart, updateCart } from "../../actions/cartActions";
 import { CART_RESET_MESSAGE } from "../../constants/cartConstants";
 import MessageBox from "../../components/MessageBox";
 const pathFile = "http://localhost:8000/";
 
 const Cart = (props) => {
+  const { t } = useTranslation();
+
   const cart = useSelector((state) => state.cart);
   const { cartItems, error, messages } = cart;
 
@@ -36,7 +40,7 @@ const Cart = (props) => {
 
       <div className="col">
         <h2 className=" h6 d-flex flex-wrap justify-content-between align-items-center rounded p-3 bg-dark">
-          <span className=" text-light mx-3">Cart Items</span>
+          <span className=" text-light mx-3">{t("cart.cart-items")}</span>
         </h2>
         {messages &&
           messages.map((message, i) => (
@@ -46,7 +50,7 @@ const Cart = (props) => {
           ))}
         {cartItems.length === 0 ? (
           <MessageBox>
-            Your Cart is empty. <Link to="/products">Go Shopping</Link>
+            {t("cart.your-cart-is-empty")}. <Link to="/products">{t("cart.go-shopping")}</Link>
           </MessageBox>
         ) : (
           cartItems.map((item) => (
@@ -76,7 +80,7 @@ const Cart = (props) => {
                     type="button"
                     onClick={() => removeFromCartHandler(item.product)}
                   >
-                    Delete
+                    {t("cart.delete")}
                   </button>
                 </div>
               </div>
@@ -87,9 +91,9 @@ const Cart = (props) => {
       </div>
       <div className="col-auto col-xl-4 col-lg-4 col-md-4 text-center">
         <h2 className="h6 p-3 bg-dark rounded text-light ">
-          Subtotal <br />
+          {t("cart.subtotal")} <br />
         </h2>
-        {cartItems.length ? cartItems.reduce((a, c) => a + c.qty, 0) + " Item(s)" : "No Items "}
+        {cartItems.length ? cartItems.reduce((a, c) => a + c.qty, 0) + ` ${t("cart.item(s)")}` : t("cart.no-items")}
         <div className="h3 font-weight-semibold my-4 py-3">
           {cartItems.length ? "$" + cartItems.reduce((a, c) => a + c.price * c.qty, 0) : null}
         </div>
@@ -100,7 +104,7 @@ const Cart = (props) => {
           onClick={checkoutHandler}
           disabled={cartItems.length === 0}
         >
-          Proceed to Checkout
+          {t("cart.proceed-to-checkout")}
         </button>
       </div>
     </div>

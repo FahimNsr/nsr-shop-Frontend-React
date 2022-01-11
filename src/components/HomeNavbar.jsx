@@ -1,10 +1,13 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+
 import { logout } from "../actions/userActions";
 import SearchBox from "../components/SearchBox";
 
 const HomeNavbar = () => {
+  const { t, i18n } = useTranslation();
   const redirect = window.location.search ? window.location.search.split("=")[1] : "/";
   const { pathname } = useLocation();
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -23,7 +26,7 @@ const HomeNavbar = () => {
           NSR
         </Link>
         <Link className={pathname === "/products" ? "btn link-secondary" : "btn link-light"} to="/products">
-          Products
+          {t("nav.products")}
         </Link>
       </div>
       <div className="col col-lg-3 col-xl-3 col-md-4 col-sm-5 mx-1">
@@ -31,38 +34,65 @@ const HomeNavbar = () => {
       </div>
       <div className="col-auto mx-1 d-flex justify-content-between">
         <Link className={pathname === "/cart" ? "btn link-secondary" : "btn link-light"} to="/cart">
-          Cart {cartBadge > 0 && <span className="badge rounded-pill bg-success">{cartBadge}</span>}
+          {t("nav.cart")} {cartBadge > 0 && <span className="badge rounded-pill bg-success">{cartBadge}</span>}
         </Link>
         {userInfo ? (
           <>
             {userInfo.isAdmin ? (
               <Link className={pathname === "/dashboard" ? "btn link-secondary" : "btn link-light"} to="/dashboard">
-                Dashboard
+                Dash
               </Link>
             ) : null}
-            <Link className={pathname === "/profile" ? "btn link-secondary" : "btn link-light"} to="/profile">
-              {userInfo.name ? userInfo.name + "|Profile" : "Profile"}
-            </Link>
-            <Link className="me-2 btn link-light" to="#logout" onClick={logoutHandler}>
-              Logout
-            </Link>
+            <div className="btn">
+              <span className="mx-2">
+                <Link
+                  className={"text-decoration-none " + (pathname === "/profile" ? " text-secondary" : " text-light")}
+                  to="/profile"
+                >
+                  {userInfo.name ? userInfo.name + `|${t("nav.profile")}` : `${t("nav.profile")}`}
+                </Link>
+              </span>
+              <span>
+                <Link className="text-decoration-none text-light " to="#logout" onClick={logoutHandler}>
+                  {t("nav.logout")}
+                </Link>
+              </span>
+            </div>
           </>
         ) : (
-          <>
-            <Link
-              className={pathname === "/register" ? "btn link-secondary" : "btn link-light"}
-              to={`/register?redirect=${redirect}`}
-            >
-              Register
-            </Link>
-            <Link
-              className={"me-2 " + (pathname === "/login" ? "btn link-secondary" : "btn link-light ")}
-              to={`/login?redirect=${redirect}`}
-            >
-              Login
-            </Link>
-          </>
+          <div className="btn">
+            <span className="mx-2">
+              <Link
+                className={"text-decoration-none " + (pathname === "/register" ? " text-secondary" : " text-light")}
+                to={`/register?redirect=${redirect}`}
+              >
+                {t("nav.register")}
+              </Link>
+            </span>
+            <span>
+              <Link
+                className={"text-decoration-none " + (pathname === "/login" ? " text-secondary" : " text-light ")}
+                to={`/login?redirect=${redirect}`}
+              >
+                {t("nav.login")}
+              </Link>
+            </span>
+          </div>
         )}
+        <div className="btn">
+          <span
+            className={i18n.resolvedLanguage === "en" ? "link-secondary" : "link-light"}
+            onClick={() => i18n.changeLanguage("en")}
+          >
+            EN{" "}
+          </span>
+          <span
+            className={i18n.resolvedLanguage === "en" ? "link-light" : "link-secondary"}
+            onClick={() => i18n.changeLanguage("de")}
+          >
+            DE
+          </span>
+        </div>
       </div>
     </div>
   );
