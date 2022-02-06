@@ -14,9 +14,9 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_FAIL,
-  // USER_LIST_REQUEST,
-  // USER_LIST_SUCCESS,
-  // USER_LIST_FAIL,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
+  USER_LIST_FAIL,
   // USER_UPDATE_SUCCESS,
   // USER_UPDATE_FAIL,
 } from "../constants/userConstants";
@@ -64,7 +64,7 @@ export const logout = () => (dispatch) => {
 
 export const detailsUser = (userId) => async (dispatch) => {
   dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   try {
     const { data } = await axios.get(`${localApi}/api/users/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -78,7 +78,7 @@ export const detailsUser = (userId) => async (dispatch) => {
 
 export const updateUserProfile = (user) => async (dispatch) => {
   dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   try {
     const { data } = await axios.put(`${localApi}/api/users/profile`, user, {
       headers: { Authorization: `Bearer ${token}` },
@@ -91,6 +91,23 @@ export const updateUserProfile = (user) => async (dispatch) => {
     dispatch({ type: USER_UPDATE_PROFILE_FAIL, payload: message });
   }
 };
+
+export const listUsers = () => async (dispatch) => {
+  dispatch({ type: USER_LIST_REQUEST });
+  try {
+    const token = localStorage.getItem("token");
+    const { data } = await axios.get(`${localApi}/api/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({ type: USER_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    const message = error.response && error.response.data.message ? error.response.data.message : error.message;
+    dispatch({ type: USER_LIST_FAIL, payload: message });
+  }
+};
+
 // export const updateUser = (user) => async (dispatch) => {
 //   dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });
 // const token = localStorage.getItem("token")
@@ -102,20 +119,5 @@ export const updateUserProfile = (user) => async (dispatch) => {
 //   } catch (error) {
 //     const message = error.response && error.response.data.message ? error.response.data.message : error.message;
 //     dispatch({ type: USER_UPDATE_FAIL, payload: message });
-//   }
-// };
-// export const listUsers = () => async (dispatch) => {
-//   dispatch({ type: USER_LIST_REQUEST });
-//   try {
-  // const token = localStorage.getItem("token")
-//     const { data } = await axios.get("/api/users", {
-//       headers: {
-//         Authorization: `Bearer ${token}`
-//       },
-//     });
-//     dispatch({ type: USER_LIST_SUCCESS, payload: data });
-//   } catch (error) {
-//     const message = error.response && error.response.data.message ? error.response.data.message : error.message;
-//     dispatch({ type: USER_LIST_FAIL, payload: message });
 //   }
 // };

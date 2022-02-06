@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { AiOutlineShopping, AiOutlineUser } from "react-icons/ai";
 
 import { logout } from "../actions/userActions";
 import SearchBox from "../components/SearchBox";
@@ -33,25 +34,25 @@ const HomeNavbar = () => {
         <SearchBox />
       </div>
       <div className="col-auto mx-1 d-flex justify-content-between">
-        <Link className={pathname === "/cart" ? "btn link-secondary" : "btn link-light"} to="/cart">
-          {t("nav.cart")} {cartBadge > 0 && <span className="badge rounded-pill bg-success">{cartBadge}</span>}
+        <Link className={pathname === "/cart" ? "btn link-secondary mx-1" : "btn link-light mx-1"} to="/cart">
+          <AiOutlineShopping /> {cartBadge > 0 && <span className="badge rounded-pill bg-success">{cartBadge}</span>}
         </Link>
         {userInfo ? (
           <>
-            {userInfo.isAdmin ? (
-              <Link className={pathname === "/dashboard" ? "btn link-secondary" : "btn link-light"} to="/dashboard">
-                Dash
-              </Link>
-            ) : null}
-            <div className="btn">
-              <span className="mx-2">
+              <span className="btn mx-1">
                 <Link
                   className={"text-decoration-none " + (pathname === "/profile" ? " text-secondary" : " text-light")}
                   to="/profile"
                 >
-                  {userInfo.name ? userInfo.name + `|${t("nav.profile")}` : `${t("nav.profile")}`}
+                  <AiOutlineUser />
                 </Link>
               </span>
+              {userInfo.isAdmin ? (
+                <Link className={pathname === "/dashboard" ? "btn link-secondary" : "btn link-light"} to="/dashboard">
+                  Dash
+                </Link>
+              ) : null}
+                  <div className="btn">
               <span>
                 <Link className="text-decoration-none text-light " to="#logout" onClick={logoutHandler}>
                   {t("nav.logout")}
